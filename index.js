@@ -1,43 +1,11 @@
 const express = require('express');
 const server = express();
 
-//Middlewares
-////////////////////////////
+//Another built-in middlware 
+//express.static() - serves static assests such as HTML files, images and so on. 
+server.use(express.static('public'));
 
-// inbulit middleware - express.json(), express.static(), express.urlencoded()
-
-server.use(express.json()); //Previously with node known as bodyParser
-
-////////////////////////////
-//Middleware - authentication
-const auth = (req, res, next) => {
-    console.log(`Request body => ${req.body}`);
-    if (req.body.password === "123") {
-        next();
-    }
-    else {
-        res.sendStatus(401);
-    }
-}
-////////////////////////////
-//API / Endpoint - Route
-server.get('/', auth, (req, res) => {
-    res.json({ type: 'GET' });
-})
-server.post('/', auth, (req, res) => {
-    res.json({ type: 'POST' });
-})
-server.put('/', auth, (req, res) => {
-    res.json({ type: 'PUT' });
-})
-server.patch('/', auth, (req, res) => {
-    res.json({ type: 'PATCH' });
-})
-server.delete('/', auth, (req, res) => {
-    res.json({ type: 'DELETE' });
-})
-
-
-server.listen(8080, () => {
-    console.log(`Listening to port 8080`);
-})
+server.get('/', (req, res, next) => {
+    res.send('<h1>Hello</h1>')
+});
+server.listen(8080);
