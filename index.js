@@ -1,11 +1,22 @@
 const express = require('express');
 const server = express();
 
-//Another built-in middlware 
-//express.static() - serves static assests such as HTML files, images and so on. 
-server.use(express.static('public'));
+//Another built-in middlware
+//third party middlewares
 
-server.get('/', (req, res, next) => {
-    res.send('<h1>Hello</h1>')
-});
-server.listen(8080);
+const morgan = require('morgan');
+
+// server.use(morgan('dev'));
+// server.use(morgan('default'));
+server.use(morgan('tiny'));
+
+//Logger middleware
+// server.get('/', (req, res, next) => {
+//     console.log(`request url : ${req.url},\nRequest Hostname : ${req.hostname},\nRequest IP : ${req.ip},\nDate : ${new Date()},\nRequest.method : ${req.method},\nOther details : ${req.get('User-Agent')}`);
+//     res.send('Hello');
+//     next();
+// })
+
+server.listen(8080, () => {
+    console.log(`Listening to port 8080`);
+})
